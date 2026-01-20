@@ -1,3 +1,11 @@
-const message = 'Hello world Ruslan!!!';
+import express from 'express';
 
-console.log(message);
+const app = express();
+
+app.get('/', (req, res, next) => {
+res.send('Hello word Ruslan');
+});
+
+app.listen(3000, () =>{
+console.log('Server is running on port 3000');
+});
