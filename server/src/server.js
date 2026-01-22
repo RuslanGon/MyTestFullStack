@@ -2,6 +2,8 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import { env } from './utils/env.js';
+import { ENV_VARS } from './constants/index.js';
+import { notFoundMiddleware } from './middlewars/notFoundMiddleware.js';
 
 
 export const startServer = () => {
@@ -14,15 +16,13 @@ export const startServer = () => {
     res.send('Hello world Ruslan');
   });
 
-  app.use((req, res) => {
-    res.status(404).send('Opps rout is not found');
-  });
+  app.use(notFoundMiddleware);
 
   app.use((error, req, res, next) => {
     res.status(500).send(error.message);
   });
 
-const PORT = env('PORT');
+const PORT = env(ENV_VARS.PORT);
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
