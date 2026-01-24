@@ -1,3 +1,6 @@
 export const ENV_VARS = {
-PORT: 'PORT'
+PORT: 'PORT',
+DB_USER: 'DB_USER',
+DB_PASSWORD: 'DB_PASSWORD',
+DB_NAME: 'DB_NAME'
 };
