@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  font-family: system-ui, sans-serif;
+}
+
+/* LEFT */
+.list {
+  flex: 2;
+}
+
+.studentCard {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.studentCard h2 {
+  margin: 0 0 8px;
+}
+
+.studentCard p,
+.studentCard span {
+  display: block;
+  color: #555;
+}
+
+/* RIGHT */
+.sidebar {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  height: fit-content;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar h3 {
+  margin-bottom: 12px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #4338ca;
+}
+
+/* EMPTY */
+.empty {
+  color: #999;
+  margin-top: 20px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
