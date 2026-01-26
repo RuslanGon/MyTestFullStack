@@ -28,29 +28,27 @@ const Students = () => {
   );
 
   return (
-    <div className={styles.container}>
-      {/* LEFT */}
-      <div className={styles.list}>
-        <h1>Students</h1>
-
-        {filteredStudents.length === 0 && (
-          <p className={styles.empty}>No students found</p>
-        )}
-
-        {filteredStudents.map((student) => (
-          <div key={student._id} className={styles.studentCard}>
-            <h2>{student.name}</h2>
-            <p>Age: {student.age}</p>
-            <span>Gender: {student.gender}</span>
-          </div>
-        ))}
-      </div>
-      <div className={styles.sidebar}>
-        <h3>Search student</h3>
-        <input className={styles.input} type="text" placeholder="Enter name" value={filter} onChange={onChange}/>
-        <button onClick={handleClick} className={styles.button}>
-          Find by name
-        </button>
+    <div className={styles.page}>
+      <h1 className={styles.title}>Students</h1>
+      <div className={styles.container}>
+        <div className={styles.list}>
+          {filteredStudents.length === 0 && (
+            <p className={styles.empty}>No students found</p>
+          )}
+          {filteredStudents.map((student) => (
+            <div key={student._id} className={styles.studentCard}>
+              <h2>{student.name}</h2>
+              <p>Age: {student.age}</p>
+              <span>Gender: {student.gender}</span>
+            </div>
+          ))}
+        </div>
+        <div className={styles.sidebar}>
+          <h3>Search student</h3>
+          <input className={styles.input} type="text" placeholder="Enter name" value={filter}
+            onChange={onChange}/>
+          <button onClick={handleClick} className={styles.button}>Find by name </button>
+        </div>
       </div>
     </div>
   );
