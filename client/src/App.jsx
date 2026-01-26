@@ -1,10 +1,11 @@
 import './App.css'
+import Students from './pages/Students.jsx'
 
 function App() {
 
   return (
   <div>
-    <h1>Hello world</h1>
+<Students />
   </div>
   )
 }
