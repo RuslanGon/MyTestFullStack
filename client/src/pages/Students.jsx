@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Students.module.css";
+import Loader from "../components/Loader.jsx";
+import Error from "../components/Error.jsx";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false)
+  const [error, SetError] = useState(false)
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     async function fetchStudents() {
-      const { data } = await axios.get("http://localhost:3001/students");
-      setStudents(data.data);
+      try {
+        setLoading(true);
+        // const { data } = await axios.get("http://localhost:3001/students");
+        const { data } = await axios.get("https://mytestfullstack.onrender.com/students");
+        setStudents(data.data);
+      } catch (error) {
+        console.log(error);
+        SetError(true);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchStudents();
   }, []);
@@ -32,6 +45,8 @@ const Students = () => {
       <h1 className={styles.title}>Students</h1>
       <div className={styles.container}>
         <div className={styles.list}>
+        {loading && <Loader />}
+        {error && <Error />}
           {filteredStudents.length === 0 && (
             <p className={styles.empty}>No students found</p>
           )}
