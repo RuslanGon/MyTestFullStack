@@ -4,7 +4,6 @@ import { getAllStudentsController, getStudenByIdController } from '../controller
 const studentsRouter = Router();
 
 studentsRouter.get('/students', getAllStudentsController );
-
 studentsRouter.get('/students/:studentId', getStudenByIdController );
 
 export default studentsRouter;
