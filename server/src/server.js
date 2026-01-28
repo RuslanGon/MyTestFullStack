@@ -5,7 +5,8 @@ import { env } from './utils/env.js';
 import { ENV_VARS } from './constants/index.js';
 import { notFoundMiddleware } from './middlewars/notFoundMiddleware.js';
 import { errorHandlerMiddleware } from './middlewars/errorHandlerMiddleware.js';
-import { getAllStudents, getStudentById } from './services/students.js';
+import studentsRouter from './routers/students.js';
+
 
 export const startServer = () => {
   const app = express();
@@ -13,31 +14,8 @@ export const startServer = () => {
   app.use(express.json());
   app.use(cors());
 
-  app.get('/students', async (req, res, next) => {
-    const students = await getAllStudents();
-    res.json({
-      status: 200,
-      message: 'Get all students',
-      data: students,
-    });
-  });
+  app.use(studentsRouter);
 
-  app.get('/students/:studentId', async (req, res, next) => {
-    const { studentId } = req.params;
-    const student = await getStudentById(studentId);
-    if (!student) {
-    return res.status(404).json({
-    status: 404,
-    message: 'Student not found',
-    });
-    }
-
-    res.json({
-    status: 200,
-    message: 'Get student by Id',
-    data: student,
-    });
-    });
 
   app.use(notFoundMiddleware);
   app.use(errorHandlerMiddleware);

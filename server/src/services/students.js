@@ -5,5 +5,5 @@ export const getAllStudents = async () => {
 };
 
 export const getStudentById = async (studentId) => {
-return await Student.findById(studentId);
+  return await Student.findById(studentId);
     };
