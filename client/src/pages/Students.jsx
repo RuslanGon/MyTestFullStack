@@ -10,7 +10,7 @@ const Students = () => {
   const [error, SetError] = useState(false);
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
-  const [showEmpty, setShowEmpty] = useState(false);
+
 
   useEffect(() => {
     async function fetchStudents() {
@@ -29,18 +29,6 @@ const Students = () => {
     fetchStudents();
   }, []);
 
-  // Таймер на 5 секунд для "No students found"
-  useEffect(() => {
-    if (!loading && students.length === 0) {
-      const timer = setTimeout(() => {
-        setShowEmpty(true);
-      }, 5000);
-
-      return () => clearTimeout(timer); // очистка таймера
-    } else {
-      setShowEmpty(false);
-    }
-  }, [loading, students]);
 
   const handleClick = () => {
     setQuery(filter);
@@ -61,11 +49,6 @@ const Students = () => {
         <div className={styles.list}>
           {loading && <Loader />}
           {error && <Error />}
-
-          {!loading && filteredStudents.length === 0 && showEmpty && (
-            <p className={styles.empty}>No students found</p>
-          )}
-
           {filteredStudents.map((student) => (
             <div key={student._id} className={styles.studentCard}>
               <h2>{student.name}</h2>
