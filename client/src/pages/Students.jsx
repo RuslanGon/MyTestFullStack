@@ -31,7 +31,11 @@ const Students = () => {
 
   const deleteUser = async (id) => {
     try {
+
+      // await axios.delete(`http://localhost:3001/students/${id}`);
       await axios.delete(`https://mytestfullstack.onrender.com/students/${id}`);
+  
+      // обновляем UI
       setStudents((prev) =>
         prev.filter((student) => student._id !== id)
       );
