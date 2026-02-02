@@ -26,10 +26,10 @@ export const getStudenByIdController = async (req, res, next) => {
     });
   };
 
-  export const createStudenController = async (req, res, next) => {
-    const { body } = req;
-    const student = await createStudent(body);
-    res.json({
+  export const createStudenController = async (req, res) => {
+    const student = await createStudent(req.body);
+
+    res.status(201).json({
       status: 201,
       message: 'Create student',
       data: student,
