@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import styles from "./AddStudent.module.css"; 
+import styles from "./AddStudent.module.css";
 
 const initialValues = {
   name: "",
@@ -11,21 +11,33 @@ const initialValues = {
 };
 
 const studentSchema = Yup.object().shape({
-  name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+  name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
   age: Yup.number().min(1, "Must be at least 1").required("Required"),
-  gender: Yup.string().oneOf(["male", "female", "other"], "Invalid gender").required("Required"),
-  avgMark: Yup.number().min(0, "Must be 0 or more").max(12, "Too high").required("Required"),
+  gender: Yup.string()
+    .oneOf(["male", "female", "other"], "Invalid gender")
+    .required("Required"),
+  avgMark: Yup.number()
+    .min(0, "Must be 0 or more")
+    .max(12, "Too high")
+    .required("Required"),
   onDuty: Yup.boolean(),
 });
 
 const AddStudent = () => {
   const handleSubmit = (values, actions) => {
-   console.log(values);
+    console.log(values);
     actions.resetForm();
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={studentSchema}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={studentSchema}
+    >
       <Form className={styles.formContainer}>
         <h2>Add new Student</h2>
 
@@ -41,6 +53,15 @@ const AddStudent = () => {
           <ErrorMessage name="age" component="span" className={styles.error} />
         </label>
 
+        <label>
+          Average Mark:
+          <Field type="text" name="avgMark" placeholder="Avg mark" step="0.1" />
+          <ErrorMessage
+            name="avgMark"
+            component="span"
+            className={styles.error}
+          />
+        </label>
         <span>Gender:</span>
         <div className={styles.radioGroup}>
           <label>
@@ -57,12 +78,6 @@ const AddStudent = () => {
           </label>
         </div>
         <ErrorMessage name="gender" component="span" className={styles.error} />
-
-        <label>
-          Average Mark:
-          <Field type="text" name="avgMark" placeholder="Avg mark" step="0.1" />
-          <ErrorMessage name="avgMark" component="span" className={styles.error} />
-        </label>
 
         <label>
           <Field type="checkbox" name="onDuty" />
