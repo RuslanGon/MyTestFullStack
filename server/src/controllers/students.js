@@ -1,4 +1,4 @@
-import { getAllStudents, getStudentById } from "../services/students.js";
+import { createStudent, getAllStudents, getStudentById } from "../services/students.js";
 
 export const getAllStudentsController = async (req, res, next) => {
   const students = await getAllStudents();
@@ -22,6 +22,16 @@ export const getStudenByIdController = async (req, res, next) => {
     res.json({
       status: 200,
       message: 'Get student by Id',
+      data: student,
+    });
+  };
+
+  export const createStudenController = async (req, res, next) => {
+    const { body } = req;
+    const student = await createStudent(body);
+    res.json({
+      status: 201,
+      message: 'Create student',
       data: student,
     });
   };
