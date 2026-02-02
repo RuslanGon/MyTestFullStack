@@ -4,10 +4,10 @@ import { ctrlWrapper } from '../middlewars/ctrlWrapper.js';
 
 const studentsRouter = Router();
 
-studentsRouter.get('/students', ctrlWrapper(getAllStudentsController));
-studentsRouter.get('/students/:studentId', ctrlWrapper(getStudenByIdController));
-studentsRouter.post('/students', ctrlWrapper(createStudenController));
-studentsRouter.delete('/students/:studentId', ctrlWrapper(deleteStudenController));
+studentsRouter.get('/', ctrlWrapper(getAllStudentsController));
+studentsRouter.get('/:studentId', ctrlWrapper(getStudenByIdController));
+studentsRouter.post('/', ctrlWrapper(createStudenController));
+studentsRouter.delete('/:studentId', ctrlWrapper(deleteStudenController));
 
 
 
