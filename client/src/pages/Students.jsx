@@ -29,6 +29,10 @@ const Students = () => {
     fetchStudents();
   }, []);
 
+  const deleteUser = () => {
+    console.log('delete');
+  }
+
 
   const handleClick = () => {
     setQuery(filter);
@@ -54,6 +58,7 @@ const Students = () => {
               <h2>{student.name}</h2>
               <p>Age: {student.age}</p>
               <span>Gender: {student.gender}</span>
+              <button type="buttton" onClick={deleteUser} className={styles.deleteButton}>Delete</button>
             </div>
           ))}
         </div>
