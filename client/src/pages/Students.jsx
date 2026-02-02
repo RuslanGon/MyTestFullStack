@@ -29,9 +29,18 @@ const Students = () => {
     fetchStudents();
   }, []);
 
-  const deleteUser = () => {
-    console.log('delete');
-  }
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`https://mytestfullstack.onrender.com/students/${id}`);
+      setStudents((prev) =>
+        prev.filter((student) => student._id !== id)
+      );
+    } catch (error) {
+      console.error(error);
+      SetError(true);
+    }
+  };
+  
 
 
   const handleClick = () => {
@@ -58,7 +67,7 @@ const Students = () => {
               <h2>{student.name}</h2>
               <p>Age: {student.age}</p>
               <span>Gender: {student.gender}</span>
-              <button type="buttton" onClick={deleteUser} className={styles.deleteButton}>Delete</button>
+              <button type="button" onClick={() => deleteUser(student._id)} className={styles.deleteButton}>Delete</button>
             </div>
           ))}
         </div>
