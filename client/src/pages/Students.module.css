@@ -65,6 +65,7 @@
   border: 1px solid #ddd;
   margin-bottom: 12px;
   font-size: 14px;
+  box-sizing: border-box; /* ← ВАЖНО */
 }
 
 .button {
