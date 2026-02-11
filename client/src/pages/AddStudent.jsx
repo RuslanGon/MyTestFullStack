@@ -1,6 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./AddStudent.module.css";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader.jsx";
+import Error from "../components/Error.jsx";
 
 const initialValues = {
   name: "",
@@ -11,25 +16,31 @@ const initialValues = {
 };
 
 const studentSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
   age: Yup.number().min(1, "Must be at least 1").required("Required"),
-  gender: Yup.string()
-    .oneOf(["male", "female", "other"], "Invalid gender")
-    .required("Required"),
-  avgMark: Yup.number()
-    .min(0, "Must be 0 or more")
-    .max(12, "Too high")
-    .required("Required"),
+  gender: Yup.string().oneOf(["male", "female", "other"], "Invalid gender").required("Required"),
+  avgMark: Yup.number().min(0, "Must be 0 or more").max(12, "Too high").required("Required"),
   onDuty: Yup.boolean(),
 });
 
 const AddStudent = () => {
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-    actions.resetForm();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
+  const handleSubmit = async (values, actions) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const { data } = await axios.post( "https://mytestfullstack.onrender.com/students", values);
+      console.log("Created:", data);
+      actions.resetForm();
+      navigate("/students")
+    } catch (err) {
+      console.log(err);
+      setError("Failed to create student");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,6 +51,8 @@ const AddStudent = () => {
     >
       <Form className={styles.formContainer}>
         <h2>Add new Student</h2>
+        {loading && <Loader />}
+          {error && <Error />}
 
         <label>
           Name:

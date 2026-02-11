@@ -8,6 +8,8 @@ studentsRouter.get('/', ctrlWrapper(getAllStudentsController));
 studentsRouter.get('/:studentId', ctrlWrapper(getStudenByIdController));
 studentsRouter.post('/', ctrlWrapper(createStudenController));
 studentsRouter.delete('/:studentId', ctrlWrapper(deleteStudenController));
+// studentsRouter.patch('/', ctrlWrapper(createStudenController));
+
 
 
 
