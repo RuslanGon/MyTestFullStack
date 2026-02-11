@@ -11,7 +11,8 @@ const Layout = ({ children }) => {
     <>
       <header className={styles.header}>
         <nav className={styles.nav}>
-          <NavLink to="/" className={getNavLinkClass}>
+        <div>
+        <NavLink to="/" className={getNavLinkClass}>
             Home
           </NavLink>
 
@@ -22,6 +23,18 @@ const Layout = ({ children }) => {
           <NavLink to="/add" className={getNavLinkClass}>
             Add Student
           </NavLink>
+        </div>
+
+         <div>
+         <NavLink to="/login" className={getNavLinkClass}>
+            Login
+          </NavLink>
+
+          <NavLink to="/register" className={getNavLinkClass}>
+            Register
+          </NavLink>
+         </div>
+
         </nav>
       </header>
 

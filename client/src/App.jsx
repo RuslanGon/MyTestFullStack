@@ -4,6 +4,8 @@ import AddStudent from "./pages/AddStudent";
 import HomePage from "./pages/HomePage";
 import Layout from "./components/Layout.jsx";
 import EditStudent from "./pages/EditStudent.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
 
 
 function App() {
@@ -14,6 +16,10 @@ function App() {
         <Route path="/students" element={<Students />} />
         <Route path="/add" element={<AddStudent />} />
         <Route path="/edit/:id" element={<EditStudent />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+
+
       </Routes>
     </Layout>
   );
