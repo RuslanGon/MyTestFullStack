@@ -1,112 +1,110 @@
 /* Контейнер формы */
 .container {
-    max-width: 320px; 
-    margin: auto;  
-    padding: 24px;      
+    max-width: 280px;   /* меньше ширина */
+    margin:  auto;  
+    padding: 16px;       /* меньше внутреннего отступа */
     background: #f4f4f4;
-    border-radius: 12px; 
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); 
+    border-radius: 10px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
     font-family: system-ui, sans-serif;
-  }
-  
-  /* Заголовок формы */
-  .title {
+}
+
+/* Заголовок формы */
+.title {
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 24px;
+    font-size: 24px;   /* чуть меньше */
+    margin-bottom: 16px;
     color: #333333;
-  }
-  
-  /* Контейнер всех полей формы */
-  .formContainer {
+}
+
+/* Контейнер всех полей формы */
+.formContainer {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    width: 100%;           /* поля растягиваются на всю ширину контейнера */
+    gap: 10px;          /* меньше расстояние между полями */
+    width: 100%;           
     box-sizing: border-box; 
-  }
-  
-  /* Метки для инпутов */
-  label {
+}
+
+/* Метки для инпутов */
+label {
     display: flex;
     flex-direction: column;
     font-weight: 500;
     color: #555555;
-    font-size: 14px;
-  }
-  
-  /* Инпуты */
-  input,
-  [type="email"],
-  [type="password"] {
-    width: 100%;            /* одинаковая ширина */
-    margin-top: 6px;
-    padding: 10px 12px;
-    border-radius: 8px;
+    font-size: 13px;   /* чуть меньше */
+}
+
+/* Инпуты */
+input,
+[type="email"],
+[type="password"] {
+    width: 100%;            
+    margin-top: 4px;      /* чуть меньше отступ */
+    padding: 8px 10px;    /* меньше padding */
+    border-radius: 6px;
     border: 1px solid #ddd;
-    font-size: 14px;
+    font-size: 13px;       /* меньше шрифт */
     transition: border-color 0.2s;
-    box-sizing: border-box;  /* padding не ломает ширину */
-  }
-  
-  input:focus,
-  [type="email"]:focus,
-  [type="password"]:focus {
+    box-sizing: border-box; 
+}
+
+input:focus,
+[type="email"]:focus,
+[type="password"]:focus {
     border-color: #4f46e5;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
-  }
-  
-  /* Сообщения об ошибке */
-  .error {
-    margin-top: 4px;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+/* Сообщения об ошибке */
+.error {
+    margin-top: 2px;
     color: #ef4444;
-    font-size: 12px;
-  }
-  
-  /* Кнопка отправки формы */
-  .submitButton {
-    width: 100%; /* растягиваем на всю ширину */
-    padding: 12px 0;
+    font-size: 11px;
+}
+
+/* Кнопка отправки формы */
+.submitButton {
+    width: 100%; 
+    padding: 10px 0;       /* меньше высота кнопки */
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     background: linear-gradient(135deg, #4f46e5, #6d5dfc);
     color: #ffffff;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;       /* меньше шрифт */
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-  }
-  
-  .submitButton:hover {
+}
+
+.submitButton:hover {
     background: linear-gradient(135deg, #6d5dfc, #4f46e5);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
-  }
-  
-  .submitButton:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+}
+
+.submitButton:active {
     transform: translateY(0);
-    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.2);
-  }
-  
-  /* Текст с ссылкой на регистрацию */
-  .registerText {
+    box-shadow: 0 3px 6px rgba(79, 70, 229, 0.2);
+}
+
+/* Текст с ссылкой на регистрацию */
+.registerText {
     text-align: center;
-    margin-top: 16px;
-    font-size: 14px;
+    margin-top: 12px;
+    font-size: 13px;
     color: #555;
-  }
-  
-  .registerLink {
+}
+
+.registerLink {
     color: #4f46e5;
     font-weight: 600;
     text-decoration: none;
     transition: color 0.2s;
-  }
-  
-  .registerLink:hover {
+}
+
+.registerLink:hover {
     color: #6d5dfc;
     text-decoration: underline;
-  }
-  
-  
+}
