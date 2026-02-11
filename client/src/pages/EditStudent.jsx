@@ -52,6 +52,7 @@ const EditStudent = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
+      
       setLoading(true);
       setError(null);
       const { data } = await axios.patch(`https://mytestfullstack.onrender.com/students/${id}`, values);
