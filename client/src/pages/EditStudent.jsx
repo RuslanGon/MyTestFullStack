@@ -18,7 +18,6 @@ const studentSchema = Yup.object().shape({
 const EditStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [initialValues, setInitialValues] = useState({
     name: "",
     age: "",
@@ -33,6 +32,7 @@ const EditStudent = () => {
     const fetchStudent = async () => {
       try {
         setLoading(true);
+         // await axios.patch(`http://localhost:3001/students/${id}`);
         const { data } = await axios.get(`http://localhost:3001/students/${id}`);
         setInitialValues({
           name: data.data.name,
@@ -68,12 +68,8 @@ const EditStudent = () => {
   };
 
   return (
-    <Formik
-      enableReinitialize 
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={studentSchema}
-    >
+    <Formik enableReinitialize initialValues={initialValues} onSubmit={handleSubmit}
+      validationSchema={studentSchema} >
       <Form className={styles.formContainer}>
         <h2>Edit Student</h2>
         {loading && <Loader />}
@@ -120,7 +116,7 @@ const EditStudent = () => {
         </label>
 
         <button type="submit" className={styles.submitButton}>
-          Update Student 👨‍🎓
+          Edit Student 👨‍🎓
         </button>
       </Form>
     </Formik>

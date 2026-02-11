@@ -12,7 +12,6 @@ const Students = () => {
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
 
-
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -44,8 +43,6 @@ const Students = () => {
     }
   };
   
-
-
   const handleClick = () => {
     setQuery(filter);
   };
@@ -78,16 +75,9 @@ const Students = () => {
 
         <div className={styles.sidebar}>
           <h3>Search student</h3>
-          <input
-            className={styles.input}
-            type="text"
-            placeholder="Enter name"
-            value={filter}
-            onChange={onChange}
-          />
-          <button onClick={handleClick} className={styles.button}>
-            Find by name
-          </button>
+          <input className={styles.input} type="text" placeholder="Enter name"value={filter}
+            onChange={onChange}/>
+          <button onClick={handleClick} className={styles.button}> Find by name </button>
         </div>
       </div>
     </div>
