@@ -31,6 +31,7 @@ const AddStudent = () => {
     try {
       setLoading(true);
       setError(null);
+        // const { data } = await axios.post( "http://localhost:3001/students");
       const { data } = await axios.post( "https://mytestfullstack.onrender.com/students", values);
       console.log("Created:", data);
       actions.resetForm();

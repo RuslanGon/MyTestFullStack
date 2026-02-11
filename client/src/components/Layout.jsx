@@ -22,6 +22,10 @@ const Layout = ({ children }) => {
           <NavLink to="/add" className={getNavLinkClass}>
             Add Student
           </NavLink>
+
+          <NavLink to="/edit" className={getNavLinkClass}>
+            Edit Student
+          </NavLink>
         </nav>
       </header>
 

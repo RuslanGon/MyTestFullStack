@@ -36,6 +36,10 @@ export const getStudenByIdController = async (req, res, next) => {
     });
   };
 
+  export const upsertStudentController = async (req, res, next) => {
+
+  };
+
   export const deleteStudenController = async (req, res) => {
     const { studentId } = req.params;
 

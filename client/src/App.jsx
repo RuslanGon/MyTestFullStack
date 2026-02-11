@@ -3,6 +3,7 @@ import Students from "./pages/Students";
 import AddStudent from "./pages/AddStudent";
 import HomePage from "./pages/HomePage";
 import Layout from "./components/Layout.jsx";
+import EditStudent from "./pages/EditStudent.jsx";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/students" element={<Students />} />
         <Route path="/add" element={<AddStudent />} />
+        <Route path="/edit" element={<EditStudent />} />
       </Routes>
     </Layout>
   );
