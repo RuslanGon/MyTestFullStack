@@ -26,7 +26,7 @@ export const getStudenByIdController = async (req, res, next) => {
     });
   };
 
-  export const createStudenController = async (req, res) => {
+export const createStudenController = async (req, res) => {
     const student = await createStudent(req.body);
     res.status(201).json({
       status: 201,
@@ -35,7 +35,27 @@ export const getStudenByIdController = async (req, res, next) => {
     });
   };
 
-  export const patchStudentController = async (req, res, next) => {
+export const patchStudentController = async (req, res, next) => {
+    try {
+      const { body } = req;
+      const { studentId } = req.params;
+      const student = await upsertStudent(studentId, body);
+
+      if (!student) {
+        return res.status(404).json({ message: "Student not found" });
+      }
+
+      res.status(200).json({
+        status: "success",
+        message: "Student updated successfully",
+        data: student,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  export const putStudentController = async (req, res, next) => {
     try {
       const { body } = req;
       const { studentId } = req.params;
