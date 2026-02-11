@@ -23,6 +23,6 @@ export const deleteStudent = async (studentId) => {
 };
 
 export const upsertStudent = async (id, payload, options = {}) => {
-  const student = await Student.updateOne({_id: id}, payload, ...options);
+  const student = await Student.findByIdAndUpdate(id, payload,{ new: true, upsert: true, ...options });
   return student;
 };
