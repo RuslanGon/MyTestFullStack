@@ -59,7 +59,7 @@ export const patchStudentController = async (req, res, next) => {
     try {
       const { body } = req;
       const { studentId } = req.params;
-      const student = await upsertStudent(studentId, body);
+      const student = await upsertStudent(studentId, body, {upsert: true});
 
       if (!student) {
         return res.status(404).json({ message: "Student not found" });
