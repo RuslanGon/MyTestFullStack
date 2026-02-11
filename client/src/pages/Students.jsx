@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./Students.module.css";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
+import { Link } from "react-router-dom";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -70,6 +71,7 @@ const Students = () => {
               <p>Age: {student.age}</p>
               <span>Gender: {student.gender}</span>
               <button type="button" onClick={() => deleteUser(student._id)} className={styles.deleteButton}>Delete</button>
+              <Link to={`/edit/${student._id}`} className={styles.link}>Edit</Link>
             </div>
           ))}
         </div>
