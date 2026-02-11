@@ -1,4 +1,4 @@
-import { createStudent, deleteStudent, getAllStudents, getStudentById } from "../services/students.js";
+import { createStudent, deleteStudent, getAllStudents, getStudentById, upsertStudent } from "../services/students.js";
 
 export const getAllStudentsController = async (req, res, next) => {
   const students = await getAllStudents();
@@ -28,7 +28,6 @@ export const getStudenByIdController = async (req, res, next) => {
 
   export const createStudenController = async (req, res) => {
     const student = await createStudent(req.body);
-
     res.status(201).json({
       status: 201,
       message: 'Create student',
@@ -36,8 +35,24 @@ export const getStudenByIdController = async (req, res, next) => {
     });
   };
 
-  export const upsertStudentController = async (req, res, next) => {
+  export const patchStudentController = async (req, res, next) => {
+    try {
+      const { body } = req;
+      const { studentId } = req.params;
+      const student = await upsertStudent(studentId, body);
 
+      if (!student) {
+        return res.status(404).json({ message: "Student not found" });
+      }
+
+      res.status(200).json({
+        status: "success",
+        message: "Student updated successfully",
+        data: student,
+      });
+    } catch (error) {
+      next(error);
+    }
   };
 
   export const deleteStudenController = async (req, res) => {
