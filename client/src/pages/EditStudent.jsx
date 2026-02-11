@@ -32,8 +32,7 @@ const EditStudent = () => {
     const fetchStudent = async () => {
       try {
         setLoading(true);
-         // await axios.patch(`http://localhost:3001/students/${id}`);
-        const { data } = await axios.get(`http://localhost:3001/students/${id}`);
+        const { data } = await axios.get(`https://mytestfullstack.onrender.com/students/${id}`);
         setInitialValues({
           name: data.data.name,
           age: data.data.age,
@@ -55,7 +54,7 @@ const EditStudent = () => {
     try {
       setLoading(true);
       setError(null);
-      const { data } = await axios.patch(`http://localhost:3001/students/${id}`, values);
+      const { data } = await axios.patch(`https://mytestfullstack.onrender.com/students/${id}`, values);
       console.log("Updated:", data);
       actions.resetForm();
       navigate("/students");
