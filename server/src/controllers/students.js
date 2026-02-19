@@ -9,7 +9,7 @@ export const getAllStudentsController = async (req, res, next) => {
   });
 };
 
-export const getStudenByIdController = async (req, res, next) => {
+export const getStudentByIdController = async (req, res, next) => {
     const { studentId } = req.params;
     const student = await getStudentById(studentId);
     if (!student) {
@@ -26,7 +26,7 @@ export const getStudenByIdController = async (req, res, next) => {
     });
   };
 
-export const createStudenController = async (req, res) => {
+export const createStudentController = async (req, res) => {
     const student = await createStudent(req.body);
     res.status(201).json({
       status: 201,
@@ -75,7 +75,7 @@ export const patchStudentController = async (req, res, next) => {
     }
   };
 
-  export const deleteStudenController = async (req, res) => {
+  export const deleteStudentController = async (req, res) => {
     const { studentId } = req.params;
 
     await deleteStudent(studentId);
