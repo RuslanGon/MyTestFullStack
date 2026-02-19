@@ -67,8 +67,10 @@ const Students = () => {
               <h2>{student.name}</h2>
               <p>Age: {student.age}</p>
               <span>Gender: {student.gender}</span>
-              <button type="button" onClick={() => deleteUser(student._id)} className={styles.deleteButton}>Delete</button>
               <Link to={`/edit/${student._id}`} className={styles.link}>Edit</Link>
+              <button type="button" onClick={() => deleteUser(student._id)} 
+              className={styles.deleteButton}>Delete</button>
+              
             </div>
           ))}
         </div>
