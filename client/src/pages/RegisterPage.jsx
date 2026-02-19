@@ -1,7 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import styles from "./LoginPage.module.css"; // используем те же стили, что для логина
+import styles from "./LoginPage.module.css"; 
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const registerSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -11,6 +12,9 @@ const registerSchema = Yup.object().shape({
 
 const RegisterPage = () => {
 
+  const [loading, setLoading] = useState(false);console.log(setLoading);
+  const [error, SetError] = useState(false);console.log(SetError);
+
   const handleSubmit = async (values) => {
     console.log("Register values:", values);
     // сюда можно добавить axios POST на /register
@@ -19,6 +23,8 @@ const RegisterPage = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Register</h2>
+      {loading && <Loader />}
+      {error && <Error />}
       <Formik
         initialValues={{ name: "", email: "", password: "" }}
         validationSchema={registerSchema}

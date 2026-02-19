@@ -2,6 +2,9 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Loader from "../components/Loader.jsx";
+import Error from "../components/Error.jsx";
 
 
 const loginSchema = Yup.object().shape({
@@ -10,14 +13,20 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginPage = () => {
+
+  const [loading, setLoading] = useState(false);console.log(setLoading);
+  const [error, SetError] = useState(false);console.log(SetError);
  
   const handleSubmit = async (values) => {
   console.log(values);
+   // сюда можно добавить axios POST на /login
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Login</h2>
+      {loading && <Loader />}
+      {error && <Error />}
       <Formik
         initialValues={{ email: "", password: "" }}  validationSchema={loginSchema}
         onSubmit={handleSubmit} >
