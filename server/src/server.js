@@ -6,6 +6,7 @@ import { ENV_VARS } from './constants/index.js';
 import { notFoundMiddleware } from './middlewars/notFoundMiddleware.js';
 import { errorHandlerMiddleware } from './middlewars/errorHandlerMiddleware.js';
 import studentsRouter from './routers/students.js';
+import authRouter from './routers/auth.js';
 
 
 export const startServer = () => {
@@ -16,6 +17,7 @@ export const startServer = () => {
   app.use(express.json());
 
   app.use('/students', studentsRouter);
+  app.use('/auth', authRouter);
 
 
   app.use(notFoundMiddleware);
