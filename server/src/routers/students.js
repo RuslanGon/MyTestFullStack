@@ -23,7 +23,7 @@ studentsRouter.delete('/:studentId',
   ctrlWrapper(deleteStudentController),
 );
 studentsRouter.patch('/:studentId',
-validateBody(patchStudentSchema),
+  validateBody(patchStudentSchema),
   validateMongoId('studentId'),
   ctrlWrapper(patchStudentController),
 );

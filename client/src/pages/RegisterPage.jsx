@@ -13,7 +13,7 @@ const registerSchema = Yup.object().shape({
 const RegisterPage = () => {
 
   const [loading, setLoading] = useState(false);console.log(setLoading);
-  const [error, SetError] = useState(false);console.log(SetError);
+  const [error, setError] = useState(false);console.log(setError);
 
   const handleSubmit = async (values) => {
     console.log("Register values:", values);
