@@ -12,7 +12,6 @@ import authRouter from './routers/auth.js';
 export const startServer = () => {
   const app = express();
   app.use(pino({ autoLogging: false }));
-  app.use(express.json());
   app.use(cors());
   app.use(express.json());
 

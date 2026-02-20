@@ -10,6 +10,18 @@
     gap: 20px;
   }
   
+  .getNavLinkClassbut{
+    margin-left: 10px;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background-color: #eee;
+    color: black;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
   .link {
     margin-left: 10px;
     text-decoration: none;
