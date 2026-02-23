@@ -3,6 +3,7 @@ import createHttpError from "http-errors";
 import { env } from "../utils/env.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Session } from "../db/models/session.js";
 
 export const registerUser = async (payload) => {
   const { email, password } = payload;
@@ -53,4 +54,11 @@ export const loginUser = async ({ email, password }) => {
       accessToken,
       refreshToken,
     };
+  };
+
+  export const logoutUser = async ({ sessionId, sessionToken }) => {
+    return await Session.deleteOne({
+      _id: sessionId,
+      refreshToken: sessionToken,
+    });
   };

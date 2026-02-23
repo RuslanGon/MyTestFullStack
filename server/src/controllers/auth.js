@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "../services/auth.js";
+import { loginUser, logoutUser, registerUser } from "../services/auth.js";
 
 
 export const registerUserController = async (req, res, next) => {
@@ -53,6 +53,22 @@ export const registerUserController = async (req, res, next) => {
     }
   };
 
-  export const logoutController =() => {
+  export const logoutController = async (req, res, next) => {
+    try {
+      await logoutUser({
+        sessionId: req.cookies.sessionId,
+        sessionToken: req.cookies.sessionToken
+      });
 
+      res.clearCookie("sessionId", { httpOnly: true, sameSite: "strict" });
+      res.clearCookie("sessionToken", { httpOnly: true, sameSite: "strict" });
+
+      res.status(200).json({
+        status: 200,
+        message: "User logged out",
+        data: {},
+      });
+    } catch (error) {
+      next(error);
+    }
   };
