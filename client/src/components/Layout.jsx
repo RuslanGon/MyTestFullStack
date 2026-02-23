@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Layout.module.css";
+import axios from "axios";
 
 
 const Layout = ({ children }) => {
@@ -8,9 +9,21 @@ const Layout = ({ children }) => {
     return isActive ? `${styles.link} ${styles.active}`: styles.link;
   };
   const navigate = useNavigate();
-  const handleLogout = () => {
-    navigate("/login");
-  }
+ 
+  const handleLogout = async () => {
+    try {
+      // Отправляем POST на сервер
+      await axios.post("https://mytestfullstack.onrender.com/auth/logout",
+        {},
+        { withCredentials: true } 
+      );
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Можно показать уведомление пользователю
+    }
+  };
 
   return (
     <>

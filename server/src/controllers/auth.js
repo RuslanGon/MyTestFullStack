@@ -23,19 +23,17 @@ export const registerUserController = async (req, res, next) => {
   export const loginUserController = async (req, res, next) => {
     try {
       const { email, password } = req.body;
-
-      // вызываем сервисную функцию
       const { user, accessToken, refreshToken } = await loginUser({ email, password });
 
-      // отправляем refreshToken в cookie
+      // Отправляем refreshToken в cookie
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
+        sameSite: "None", // для кросс-домена
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
-      // возвращаем accessToken в JSON и данные пользователя
+      // Возвращаем accessToken и данные пользователя
       res.status(200).json({
         status: 200,
         message: "Login successful",
@@ -57,11 +55,21 @@ export const registerUserController = async (req, res, next) => {
     try {
       await logoutUser({
         sessionId: req.cookies.sessionId,
-        sessionToken: req.cookies.sessionToken
+        sessionToken: req.cookies.sessionToken,
       });
 
-      res.clearCookie("sessionId", { httpOnly: true, sameSite: "strict" });
-      res.clearCookie("sessionToken", { httpOnly: true, sameSite: "strict" });
+      // Кросс-доменные cookie: sameSite=None и secure=true для HTTPS
+      res.clearCookie("sessionId", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "None",
+      });
+
+      res.clearCookie("sessionToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "None",
+      });
 
       res.status(200).json({
         status: 200,
