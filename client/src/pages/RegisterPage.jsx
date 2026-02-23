@@ -1,8 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css"; 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+import Loader from "../components/Loader.jsx";
+import Error from "../components/Error.jsx";
 
 const registerSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -11,20 +14,39 @@ const registerSchema = Yup.object().shape({
 });
 
 const RegisterPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);console.log(setLoading);
-  const [error, setError] = useState(false);console.log(setError);
+  const handleSubmit = async (values, actions) => {
+    try {
+      setLoading(true);
+      setError(null);
 
-  const handleSubmit = async (values) => {
-    console.log("Register values:", values);
-    // сюда можно добавить axios POST на /register
+      const { data } = await axios.post(
+        "https://mytestfullstack.onrender.com/auth/register",
+        values,
+        { withCredentials: true } // важно, если сервер ставит cookie
+      );
+
+      console.log("User registered:", data);
+      actions.resetForm();
+      navigate("/login"); // после успешной регистрации переходим на логин
+    } catch (err) {
+      console.error(err);
+      // если сервер возвращает сообщение ошибки
+      setError(err.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Register</h2>
       {loading && <Loader />}
-      {error && <Error />}
+      {error && <Error message={error} />}
+
       <Formik
         initialValues={{ name: "", email: "", password: "" }}
         validationSchema={registerSchema}

@@ -1,11 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
-
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -13,23 +13,45 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);console.log(setLoading);
-  const [error, setError] = useState(false);console.log(setError);
- 
-  const handleSubmit = async (values) => {
-  console.log(values);
-   // сюда можно добавить axios POST на /login
+  const handleSubmit = async (values, actions) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.post(
+        "https://mytestfullstack.onrender.com/auth/login",
+        values,
+        { withCredentials: true } // важно для cookie
+      );
+
+      console.log("Login successful:", data);
+      actions.resetForm();
+
+      // После успешного логина перенаправляем на главную или /students
+      navigate("/students");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Login</h2>
       {loading && <Loader />}
-      {error && <Error />}
+      {error && <Error message={error} />}
+      
       <Formik
-        initialValues={{ email: "", password: "" }}  validationSchema={loginSchema}
-        onSubmit={handleSubmit} >
+        initialValues={{ email: "", password: "" }}
+        validationSchema={loginSchema}
+        onSubmit={handleSubmit}
+      >
         <Form className={styles.formContainer}>
           <label>
             Email:
