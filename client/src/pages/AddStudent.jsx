@@ -2,10 +2,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./AddStudent.module.css";
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
+import { requestAddUser } from "../services/api.js";
 
 const initialValues = {
   name: "",
@@ -27,12 +27,12 @@ const AddStudent = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
   const handleSubmit = async (values, actions) => {
     try {
       setLoading(true);
       setError(null);
-        // const { data } = await axios.post( "http://localhost:3001/students");
-      const { data } = await axios.post( "https://mytestfullstack.onrender.com/students", values);
+      const data = await requestAddUser(values)
       console.log("Created:", data);
       actions.resetForm();
       navigate("/students")

@@ -3,9 +3,9 @@ import * as Yup from "yup";
 import styles from "./LoginPage.module.css"; 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
+import { requestRegisterUser } from "../services/api.js";
 
 const registerSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -22,19 +22,12 @@ const RegisterPage = () => {
     try {
       setLoading(true);
       setError(null);
-
-      const { data } = await axios.post(
-        "https://mytestfullstack.onrender.com/auth/register",
-        values,
-        { withCredentials: true } // важно, если сервер ставит cookie
-      );
-
+      const data = await requestRegisterUser(values);
       console.log("User registered:", data);
       actions.resetForm();
-      navigate("/login"); // после успешной регистрации переходим на логин
+      navigate("/login"); 
     } catch (err) {
       console.error(err);
-      // если сервер возвращает сообщение ошибки
       setError(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);

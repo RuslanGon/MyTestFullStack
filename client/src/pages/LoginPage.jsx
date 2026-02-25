@@ -3,9 +3,9 @@ import * as Yup from "yup";
 import styles from "./LoginPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
+import { requestLoginUser } from "../services/api.js";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -21,17 +21,9 @@ const LoginPage = () => {
     try {
       setLoading(true);
       setError(null);
-
-      const { data } = await axios.post(
-        "https://mytestfullstack.onrender.com/auth/login",
-        values,
-        { withCredentials: true } // важно для cookie
-      );
-
+      const data = await requestLoginUser(values)
       console.log("Login successful:", data);
       actions.resetForm();
-
-      // После успешного логина перенаправляем на главную или /students
       navigate("/students");
     } catch (err) {
       console.error("Login error:", err);

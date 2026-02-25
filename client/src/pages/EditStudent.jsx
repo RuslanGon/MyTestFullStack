@@ -2,10 +2,11 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./AddStudent.module.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
+import { requestPatchStudent, requestStudentById } from "../services/api.js";
+
 
 const studentSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -32,7 +33,7 @@ const EditStudent = () => {
     const fetchStudent = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`https://mytestfullstack.onrender.com/students/${id}`);
+        const data = await requestStudentById(id)
         setInitialValues({
           name: data.data.name,
           age: data.data.age,
@@ -52,10 +53,9 @@ const EditStudent = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
-      
       setLoading(true);
       setError(null);
-      const { data } = await axios.patch(`https://mytestfullstack.onrender.com/students/${id}`, values);
+      const data = await requestPatchStudent(id, values);
       console.log("Updated:", data);
       actions.resetForm();
       navigate("/students");

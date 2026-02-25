@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styles from "./Students.module.css";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
 import { Link } from "react-router-dom";
+import { requestDeleteUser, requestStudents } from "../services/api.js";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -16,8 +16,7 @@ const Students = () => {
     async function fetchStudents() {
       try {
         setLoading(true);
-        // const { data } = await axios.get( "http://localhost:3001/students");
-        const { data } = await axios.get( "https://mytestfullstack.onrender.com/students");
+        const data = await requestStudents()
         setStudents(data.data);
       } catch (error) {
         console.log(error);
@@ -31,12 +30,8 @@ const Students = () => {
 
   const deleteUser = async (id) => {
     try {
-      // await axios.delete(`http://localhost:3001/students/${id}`);
-      await axios.delete(`https://mytestfullstack.onrender.com/students/${id}`);
-      // обновляем UI
-      setStudents((prev) =>
-        prev.filter((student) => student._id !== id)
-      );
+      await requestDeleteUser(id)
+      setStudents((prev) => prev.filter((student) => student._id !== id));
     } catch (error) {
       console.error(error);
       SetError(true);
