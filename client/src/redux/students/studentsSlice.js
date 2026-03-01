@@ -18,12 +18,13 @@ export const studentsSlice = createSlice({
       })
       .addCase(apiRequestStudents.fulfilled, (state, action) => {
         state.loading = false;
-        state.students = action.payload;
+        state.students = action.payload.data;
       })
       .addCase(apiRequestStudents.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
+      // delete user
       .addCase(apiRequestDeleteStudentById.pending, (state) => {
         state.loading = true;
         state.error = null;

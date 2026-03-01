@@ -3,39 +3,44 @@ import styles from "./Students.module.css";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
 import { Link } from "react-router-dom";
-import { requestDeleteUser, requestStudents } from "../services/api.js";
+// import { requestDeleteUser, requestStudents } from "../services/api.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectError, selectLoading, selectStudents } from "../redux/students/selectors.js";
+import { apiRequestDeleteStudentById, apiRequestStudents } from "../redux/students/operations.js";
 
 const Students = () => {
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, SetError] = useState(false);
+  // const [students, setStudents] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, SetError] = useState(false);
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
+  const dispatsh = useDispatch()
+  const students = useSelector(selectStudents)
+  const loading = useSelector(selectLoading)
+  const error = useSelector(selectError)
 
   useEffect(() => {
-    async function fetchStudents() {
-      try {
-        setLoading(true);
-        const data = await requestStudents()
-        setStudents(data.data);
-      } catch (error) {
-        console.log(error);
-        SetError(true);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchStudents();
-  }, []);
+    dispatsh(apiRequestStudents())
+  },[dispatsh])
+
+  // useEffect(() => {
+  //   async function fetchStudents() {
+  //     try {
+  //       setLoading(true);
+  //       const data = await requestStudents()
+  //       setStudents(data.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //       SetError(true);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchStudents();
+  // }, []);
 
   const deleteUser = async (id) => {
-    try {
-      await requestDeleteUser(id)
-      setStudents((prev) => prev.filter((student) => student._id !== id));
-    } catch (error) {
-      console.error(error);
-      SetError(true);
-    }
+  dispatsh(apiRequestDeleteStudentById(id))
   };
   
   const handleClick = () => {
