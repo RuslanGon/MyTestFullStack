@@ -1,11 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./AddStudent.module.css";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
-import { requestAddUser } from "../services/api.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectError, selectLoading } from "../redux/students/selectors.js";
+import { apiRequestAddUser } from "../redux/students/operations.js";
 
 const initialValues = {
   name: "",
@@ -24,24 +25,16 @@ const studentSchema = Yup.object().shape({
 });
 
 const AddStudent = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const loading = useSelector(selectLoading)
+  const error = useSelector(selectError)
 
   const handleSubmit = async (values, actions) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await requestAddUser(values)
-      console.log("Created:", data);
-      actions.resetForm();
-      navigate("/students")
-    } catch (err) {
-      console.log(err);
-      setError("Failed to create student");
-    } finally {
-      setLoading(false);
-    }
+    dispatch(apiRequestAddUser(values));
+    actions.resetForm(); 
+    navigate("/students");
   };
 
   return (

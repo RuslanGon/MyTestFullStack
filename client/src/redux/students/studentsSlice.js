@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiRequestDeleteStudentById, apiRequestStudents } from "./operations.js";
+import { apiRequestAddUser, apiRequestDeleteStudentById, apiRequestStudents } from "./operations.js";
 
 const initialState = {
   students: [],
@@ -34,6 +34,19 @@ export const studentsSlice = createSlice({
         state.students = state.students.filter(student => student._id !== action.payload);
       })
       .addCase(apiRequestDeleteStudentById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //  Add user
+      .addCase(apiRequestAddUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(apiRequestAddUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.students.push(action.payload.data)
+      })
+      .addCase(apiRequestAddUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

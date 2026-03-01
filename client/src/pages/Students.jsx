@@ -3,15 +3,11 @@ import styles from "./Students.module.css";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
 import { Link } from "react-router-dom";
-// import { requestDeleteUser, requestStudents } from "../services/api.js";
 import { useDispatch, useSelector } from "react-redux";
 import { selectError, selectLoading, selectStudents } from "../redux/students/selectors.js";
 import { apiRequestDeleteStudentById, apiRequestStudents } from "../redux/students/operations.js";
 
 const Students = () => {
-  // const [students, setStudents] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [error, SetError] = useState(false);
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
   const dispatsh = useDispatch()
@@ -22,22 +18,6 @@ const Students = () => {
   useEffect(() => {
     dispatsh(apiRequestStudents())
   },[dispatsh])
-
-  // useEffect(() => {
-  //   async function fetchStudents() {
-  //     try {
-  //       setLoading(true);
-  //       const data = await requestStudents()
-  //       setStudents(data.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //       SetError(true);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchStudents();
-  // }, []);
 
   const deleteUser = async (id) => {
   dispatsh(apiRequestDeleteStudentById(id))
@@ -51,8 +31,9 @@ const Students = () => {
     setFilter(e.target.value);
   };
 
-  const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(query.toLowerCase())
+  const filteredStudents = (students || []).filter(
+    (student) =>
+      student.name?.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
