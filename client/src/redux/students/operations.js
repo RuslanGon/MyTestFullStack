@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { requestStudents } from "../../services/api.js";
+import { requestDeleteUser, requestStudents } from "../../services/api.js";
 
 export const apiRequestStudents = createAsyncThunk(
     "students/get",
@@ -12,3 +12,14 @@ export const apiRequestStudents = createAsyncThunk(
       }
     }
   );
+
+export const apiRequestDeleteStudentById = createAsyncThunk('students/delete',
+    async (id, thunkApi) => {
+        try {
+            await requestDeleteUser(id)
+            return id;
+        } catch (error) {
+            return thunkApi.rejectWithValue(error.response?.data || error.message);
+        }
+    }
+)  
