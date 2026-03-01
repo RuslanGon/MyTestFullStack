@@ -1,20 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { apiRequestStudents } from "./operations.js";
 
 const initialState = {
   students: [],
-  error: false,
+  error: null,
   loading: false
 };
 
 export const studentsSlice = createSlice({
-    name: "students",
-    initialState,
-    reducers: {
-    },
-    extraReducers: (builder) => {
-        builder 
-       
-    }
+  name: "students",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => builder
+      .addCase(apiRequestStudents.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(apiRequestStudents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.students = action.payload;
+      })
+      .addCase(apiRequestStudents.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 });
 
 export default studentsSlice.reducer;
