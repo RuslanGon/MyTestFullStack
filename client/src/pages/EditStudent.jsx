@@ -1,99 +1,85 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import styles from "./AddStudent.module.css";
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Loader from "../components/Loader.jsx";
-import Error from "../components/Error.jsx";
-import { requestPatchStudent, requestStudentById } from "../services/api.js";
-
+import { apiRequestStudentById, apiRequestEditStudent } from "../redux/students/operations";
+import { selectLoading, selectError, selectCurrentStudent } from "../redux/students/selectors";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
+import styles from "./AddStudent.module.css"; // <- подключаем стили
 
 const studentSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
   age: Yup.number().min(1, "Must be at least 1").required("Required"),
   gender: Yup.string().oneOf(["male", "female", "other"], "Invalid gender").required("Required"),
   avgMark: Yup.number().min(0, "Must be 0 or more").max(12, "Too high").required("Required"),
-  onDuty: Yup.boolean(),
+  onDuty: Yup.boolean()
 });
 
 const EditStudent = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [initialValues, setInitialValues] = useState({
-    name: "",
-    age: "",
-    gender: "male",
-    avgMark: "",
-    onDuty: false,
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+
+  const student = useSelector(selectCurrentStudent);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
-    const fetchStudent = async () => {
-      try {
-        setLoading(true);
-        const data = await requestStudentById(id)
-        setInitialValues({
-          name: data.data.name,
-          age: data.data.age,
-          gender: data.data.gender,
-          avgMark: data.data.avgMark,
-          onDuty: data.data.onDuty,
-        });
-      } catch (err) {
-        console.log(err);
-        setError("Failed to load student data");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchStudent();
-  }, [id]);
+    dispatch(apiRequestStudentById(id));
+  }, [dispatch, id]);
 
   const handleSubmit = async (values, actions) => {
     try {
-      setLoading(true);
-      setError(null);
-      const data = await requestPatchStudent(id, values);
-      console.log("Updated:", data);
+      await dispatch(apiRequestEditStudent({ id, updatedData: values })).unwrap();
       actions.resetForm();
       navigate("/students");
     } catch (err) {
-      console.log(err);
-      setError("Failed to update student");
-    } finally {
-      setLoading(false);
+      console.error(err);
     }
   };
 
+  if (!student) return <Loader />;
+
   return (
-    <Formik enableReinitialize initialValues={initialValues} onSubmit={handleSubmit}
-      validationSchema={studentSchema} >
+    <Formik
+      enableReinitialize
+      initialValues={{
+        name: student.name || "",
+        age: student.age || "",
+        gender: student.gender || "male",
+        avgMark: student.avgMark || "",
+        onDuty: student.onDuty || false
+      }}
+      validationSchema={studentSchema}
+      onSubmit={handleSubmit}
+    >
       <Form className={styles.formContainer}>
         <h2>Edit Student</h2>
+
         {loading && <Loader />}
         {error && <Error message={error} />}
 
-        <label>
+        <label className={styles.label}>
           Name:
-          <Field type="text" name="name" placeholder="Student name" />
+          <Field type="text" name="name" placeholder="Student name" className={styles.input} />
           <ErrorMessage name="name" component="span" className={styles.error} />
         </label>
 
-        <label>
+        <label className={styles.label}>
           Age:
-          <Field type="number" name="age" placeholder="Age" />
+          <Field type="number" name="age" placeholder="Age" className={styles.input} />
           <ErrorMessage name="age" component="span" className={styles.error} />
         </label>
 
-        <label>
+        <label className={styles.label}>
           Average Mark:
-          <Field type="number" name="avgMark" placeholder="Avg mark" step="0.1" />
+          <Field type="number" name="avgMark" placeholder="Avg mark" step="0.1" className={styles.input} />
           <ErrorMessage name="avgMark" component="span" className={styles.error} />
         </label>
 
-        <span>Gender:</span>
+        <span className={styles.label}>Gender:</span>
         <div className={styles.radioGroup}>
           <label>
             <Field type="radio" name="gender" value="male" />
@@ -110,13 +96,13 @@ const EditStudent = () => {
         </div>
         <ErrorMessage name="gender" component="span" className={styles.error} />
 
-        <label>
+        <label className={styles.checkboxLabel}>
           <Field type="checkbox" name="onDuty" />
           On Duty
         </label>
 
         <button type="submit" className={styles.submitButton}>
-          Edit Student 👨‍🎓
+          Save 👨‍🎓
         </button>
       </Form>
     </Formik>
