@@ -7,7 +7,7 @@ import { apiRequestStudentById, apiRequestEditStudent } from "../redux/students/
 import { selectLoading, selectError, selectCurrentStudent } from "../redux/students/selectors";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import styles from "./AddStudent.module.css"; // <- подключаем стили
+import styles from "./AddStudent.module.css"; 
 
 const studentSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
