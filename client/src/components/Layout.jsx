@@ -1,9 +1,13 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Layout.module.css";
 import { requestLogout } from "../services/api.js";
+import { useSelector } from "react-redux";
+import { selectAuthIsSignedIn } from "../redux/auth/selectors.js";
 
 
 const Layout = ({ children }) => {
+
+  const isSignedIn  = useSelector(selectAuthIsSignedIn)
 
   const getNavLinkClass = ({ isActive }) => {
     return isActive ? `${styles.link} ${styles.active}`: styles.link;
@@ -27,21 +31,19 @@ const Layout = ({ children }) => {
             <NavLink to="/" className={getNavLinkClass}>
               Home
             </NavLink>
-
-            <NavLink to="/students" className={getNavLinkClass}>
+            {isSignedIn? <>
+              <NavLink to="/students" className={getNavLinkClass}>
               Students
             </NavLink>
 
             <NavLink to="/add" className={getNavLinkClass}>
               Add Student
             </NavLink>
-          </div>
 
-          <div>
             <button onClick={handleLogout} className={styles.getNavLinkClassbut}>
               Logout
             </button>
-
+            </> : <>
             <NavLink to="/login" className={getNavLinkClass}>
               Login
             </NavLink>
@@ -49,6 +51,7 @@ const Layout = ({ children }) => {
             <NavLink to="/register" className={getNavLinkClass}>
               Register
             </NavLink>
+            </>}
           </div>
         </nav>
       </header>
