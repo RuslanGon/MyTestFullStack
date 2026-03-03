@@ -2,10 +2,13 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css"; 
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
-import { requestRegisterUser } from "../services/api.js";
+// import { requestRegisterUser } from "../services/api.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAuthError, selectAuthLoading } from "../redux/auth/selectors.js";
+import { apiRegister } from "../redux/auth/operations.js";
 
 const registerSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -14,23 +17,21 @@ const registerSchema = Yup.object().shape({
 });
 
 const RegisterPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  const dispatsh = useDispatch()
   const navigate = useNavigate();
+  const loading = useSelector(selectAuthLoading)
+  const error = useSelector(selectAuthError)
+  
 
   const handleSubmit = async (values, actions) => {
     try {
-      setLoading(true);
-      setError(null);
-      const data = await requestRegisterUser(values);
-      console.log("User registered:", data);
+      await dispatsh(apiRegister(values)).unwrap(); 
       actions.resetForm();
-      navigate("/login"); 
+      navigate("/login");
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || "Registration failed");
-    } finally {
-      setLoading(false);
     }
   };
 
