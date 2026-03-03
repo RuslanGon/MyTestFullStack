@@ -2,23 +2,36 @@ import { loginUser, logoutUser, registerUser } from "../services/auth.js";
 
 
 export const registerUserController = async (req, res, next) => {
-    try {
-      const user = await registerUser(req.body);
-      res.status(201).json({
-        status: 201,
-        message: "User created",
-        data: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        },
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+  try {
+    const user = await registerUser(req.body);
+
+    // Генерация JWT accessToken
+    const accessToken = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" } // срок действия токена
+    );
+
+    // Можно также создать refreshToken, если используешь его
+    // const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: "7d" });
+
+    res.status(201).json({
+      status: 201,
+      message: "User created",
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        accessToken, // <-- добавляем токен
+
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
   export const loginUserController = async (req, res, next) => {
     try {
