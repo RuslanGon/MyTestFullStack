@@ -45,3 +45,13 @@
     padding: 30px;
   }
   
+  .nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+  }
+  
+  .leftLinks, .rightLinks {
+    display: flex;
+    gap: 10px; 
+  }

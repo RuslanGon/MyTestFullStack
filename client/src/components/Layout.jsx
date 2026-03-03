@@ -25,36 +25,32 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <header className={styles.header}>
-        <nav className={styles.nav}>
-          <div>
-            <NavLink to="/" className={getNavLinkClass}>
-              Home
-            </NavLink>
-            {isSignedIn? <>
-              <NavLink to="/students" className={getNavLinkClass}>
-              Students
-            </NavLink>
+     <header className={styles.header}>
+  <nav className={styles.nav}>
+    <div className={styles.leftLinks}>
+      <NavLink to="/" className={getNavLinkClass}>Home</NavLink>
+      {isSignedIn && (
+        <>
+          <NavLink to="/students" className={getNavLinkClass}>Students</NavLink>
+          <NavLink to="/add" className={getNavLinkClass}>Add Student</NavLink>
+        </>
+      )}
+    </div>
 
-            <NavLink to="/add" className={getNavLinkClass}>
-              Add Student
-            </NavLink>
-
-            <button onClick={handleLogout} className={styles.getNavLinkClassbut}>
-              Logout
-            </button>
-            </> : <>
-            <NavLink to="/login" className={getNavLinkClass}>
-              Login
-            </NavLink>
-
-            <NavLink to="/register" className={getNavLinkClass}>
-              Register
-            </NavLink>
-            </>}
-          </div>
-        </nav>
-      </header>
+    <div className={styles.rightLinks}>
+      {isSignedIn ? (
+        <button onClick={handleLogout} className={styles.getNavLinkClassbut}>
+          Logout
+        </button>
+      ) : (
+        <>
+          <NavLink to="/login" className={getNavLinkClass}>Login</NavLink>
+          <NavLink to="/register" className={getNavLinkClass}>Register</NavLink>
+        </>
+      )}
+    </div>
+  </nav>
+</header>
 
       <main className={styles.content}>{children}</main>
     </>
