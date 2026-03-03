@@ -39,10 +39,11 @@ const Students = () => {
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Students</h1>
+      {loading && <Loader />}
+          {error && <Error />}
       <div className={styles.container}>
         <div className={styles.list}>
-          {loading && <Loader />}
-          {error && <Error />}
+         
           {filteredStudents.map((student) => (
             <div key={student._id} className={styles.studentCard}>
               <h2>{student.name}</h2>
