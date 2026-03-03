@@ -32,7 +32,8 @@ export const apiRegister = createAsyncThunk(
     async (loginData, thunkApi) => {
       try {
         const { data } = await instance.post("/auth/login", loginData);
-        return data;
+        setToken(data.data.accessToken); 
+        return data.data; 
       } catch (error) {return thunkApi.rejectWithValue(error.response?.data || error.message);
       }
     }
@@ -43,8 +44,10 @@ export const apiRegister = createAsyncThunk(
     async (_, thunkApi) => {
       try {
         const { data } = await instance.post("/auth/logout");
-        return data;
-      } catch (error) {return thunkApi.rejectWithValue(error.response?.data || error.message);
+        clearToken();
+        return data.data;
+      } catch (error) {
+        return thunkApi.rejectWithValue(error.response?.data || error.message);
       }
     }
   );

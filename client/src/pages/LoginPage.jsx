@@ -2,10 +2,11 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
-import { requestLoginUser } from "../services/api.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAuthError, selectAuthLoading } from "../redux/auth/selectors.js";
+import { apiLogin } from "../redux/auth/operations.js";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -13,23 +14,18 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+  const loading = useSelector(selectAuthLoading)
+  const error = useSelector(selectAuthError)
 
   const handleSubmit = async (values, actions) => {
     try {
-      setLoading(true);
-      setError(null);
-      const data = await requestLoginUser(values)
-      console.log("Login successful:", data);
+      await dispatch(apiLogin(values)).unwrap(); 
       actions.resetForm();
       navigate("/students");
     } catch (err) {
       console.error("Login error:", err);
-      setError(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
     }
   };
 
