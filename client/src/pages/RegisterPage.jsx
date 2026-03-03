@@ -2,10 +2,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css"; 
 import { Link, useNavigate } from "react-router-dom";
-// import { useState } from "react";
 import Loader from "../components/Loader.jsx";
 import Error from "../components/Error.jsx";
-// import { requestRegisterUser } from "../services/api.js";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthError, selectAuthLoading } from "../redux/auth/selectors.js";
 import { apiRegister } from "../redux/auth/operations.js";
@@ -17,8 +15,6 @@ const registerSchema = Yup.object().shape({
 });
 
 const RegisterPage = () => {
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
   const dispatsh = useDispatch()
   const navigate = useNavigate();
   const loading = useSelector(selectAuthLoading)
