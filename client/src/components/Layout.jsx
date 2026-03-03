@@ -2,12 +2,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Layout.module.css";
 import { requestLogout } from "../services/api.js";
 import { useSelector } from "react-redux";
-import { selectAuthIsSignedIn } from "../redux/auth/selectors.js";
+import { selectAuthIsSignedIn, selectAuthUserData } from "../redux/auth/selectors.js";
 
 
 const Layout = ({ children }) => {
 
   const isSignedIn  = useSelector(selectAuthIsSignedIn)
+  const userData = useSelector(selectAuthUserData)
 
   const getNavLinkClass = ({ isActive }) => {
     return isActive ? `${styles.link} ${styles.active}`: styles.link;
@@ -39,9 +40,14 @@ const Layout = ({ children }) => {
 
     <div className={styles.rightLinks}>
       {isSignedIn ? (
+        <>
+        <p>Hello {userData.name}</p>
         <button onClick={handleLogout} className={styles.getNavLinkClassbut}>
           Logout
         </button>
+        </>
+        
+        
       ) : (
         <>
           <NavLink to="/login" className={getNavLinkClass}>Login</NavLink>
