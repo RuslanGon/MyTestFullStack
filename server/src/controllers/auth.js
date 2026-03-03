@@ -1,5 +1,5 @@
 import { loginUser, logoutUser, registerUser } from "../services/auth.js";
-
+import jwt from "jsonwebtoken";
 
 export const registerUserController = async (req, res, next) => {
   try {
@@ -9,7 +9,7 @@ export const registerUserController = async (req, res, next) => {
     const accessToken = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" } // срок действия токена
+      { expiresIn: "1h" }
     );
 
     // Можно также создать refreshToken, если используешь его
@@ -24,11 +24,12 @@ export const registerUserController = async (req, res, next) => {
         email: user.email,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
-        accessToken, // <-- добавляем токен
+        accessToken,
 
       },
     });
   } catch (error) {
+    console.error("Registration error:", error);
     next(error);
   }
 };
