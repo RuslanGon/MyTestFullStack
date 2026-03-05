@@ -27,13 +27,9 @@ const AddContact = () => {
   const error = useSelector(selectContactsError)
 
   const handleSubmit = async (values, actions) => {
-    try {
-      await dispatch(apiRequestAddContact(values)).unwrap();
-      actions.resetForm();
-      navigate("/contacts");
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(apiRequestAddContact(values));
+    actions.resetForm(); 
+    navigate("/contacts");
   };
 
   return (
