@@ -35,7 +35,7 @@ const Layout = ({ children }) => {
         <>
           <NavLink to="/students" className={getNavLinkClass}>Students</NavLink>
           <NavLink to="/add" className={getNavLinkClass}>Add Student</NavLink>
-          <NavLink to="/contacts" className={getNavLinkClass}>Add Student</NavLink>
+          <NavLink to="/contacts" className={getNavLinkClass}>Contacts</NavLink>
         </>
       )}
     </div>
