@@ -6,7 +6,7 @@ import { createContactController, deleteContactController, getAllContactsControl
 
 const contactsRouter = Router();
 
-contactsRouter.get('/', validateBody(contactSchema), ctrlWrapper(getAllContactsController));
+contactsRouter.get('/', ctrlWrapper(getAllContactsController));
 
 contactsRouter.post('/', validateBody(contactSchema), ctrlWrapper(createContactController));
 

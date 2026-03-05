@@ -60,3 +60,24 @@ export const requestPatchStudent = async (id, updatedData) => {
     );
     return data;
   };
+
+
+  export const requestContacts = async () => {
+  const { data } = await axios.get("https://mytestfullstack.onrender.com/contacts");
+  return data;
+};
+
+export const requestAddContact = async (contactData) => {
+const { data } = await axios.post("https://mytestfullstack.onrender.com/contacts", contactData);
+return data;
+};
+
+export const requestPatchContact = async (id, updatedData) => {
+const { data } = await axios.patch(`https://mytestfullstack.onrender.com/contacts/${id}`,
+  updatedData);
+return data;
+};
+
+export const requestDeleteContact = async (id) => {
+await axios.delete(`https://mytestfullstack.onrender.com/contacts/${id}`);
+}
