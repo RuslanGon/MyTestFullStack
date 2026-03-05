@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiRequestContacts } from "./operations.js";
+import { apiRequestContacts, apiRequestDeleteContactsById } from "./operations.js";
 
 const initialState = {
   contacts: [],
@@ -24,7 +24,19 @@ export const contactsSlice = createSlice({
     state.loading = false;
     state.error = action.payload;
   })
-    
+    // delete User 
+    .addCase(apiRequestDeleteContactsById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(apiRequestDeleteContactsById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.contacts = state.contacts.filter(contact => contact._id !== action.payload);
+    })
+    .addCase(apiRequestDeleteContactsById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
 });
 
 export default contactsSlice.reducer;
