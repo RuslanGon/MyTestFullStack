@@ -6,7 +6,6 @@ export const apiRequestStudents = createAsyncThunk(
     async (_, thunkApi) => {
       try {
         const data = await requestStudents();
-        // console.log("API response:", data);
         return data; 
       } catch (error) {
         return thunkApi.rejectWithValue(error.response?.data || error.message);
