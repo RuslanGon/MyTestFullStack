@@ -1,4 +1,4 @@
-import { createContact, deleteContact, getAllContacts } from "../services/contacts.js";
+import { createContact, deleteContact, getAllContacts, upsertContact } from "../services/contacts.js";
 
 export const getAllContactsController = async (req, res, next) => {
     const contacts = await getAllContacts();
@@ -35,4 +35,25 @@ export const getAllContactsController = async (req, res, next) => {
       status: 200,
       message: 'Contact deleted successfully',
     });
+  };
+
+  export const patchContactController = async (req, res, next) => {
+    try {
+      const { body } = req;
+      const { contactId } = req.params;
+
+      const contact = await upsertContact(contactId, body);
+
+      if (!contact) {
+        return res.status(404).json({ status: 404, message: "Contact not found" });
+      }
+
+      res.status(200).json({
+        status: 200,
+        message: "Contact updated successfully",
+        data: contact,
+      });
+    } catch (error) {
+      next(error);
+    }
   };

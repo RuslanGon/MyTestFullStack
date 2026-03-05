@@ -15,6 +15,6 @@ export const getAllContacts = async () => {
   };
 
   export const upsertContact = async (id, payload, options = {}) => {
-    const contact = await Contact.findByIdAndUpdate(id, payload,{ new: true, upsert: true, ...options });
+    const contact = await Contact.findByIdAndUpdate(id, payload, { new: true, ...options });
     return contact;
   };
