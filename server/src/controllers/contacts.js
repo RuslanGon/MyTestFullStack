@@ -1,4 +1,4 @@
-import { createContact, getAllContacts } from "../services/contacts.js";
+import { createContact, deleteContact, getAllContacts } from "../services/contacts.js";
 
 export const getAllContactsController = async (req, res, next) => {
     const contacts = await getAllContacts();
@@ -16,5 +16,23 @@ export const getAllContactsController = async (req, res, next) => {
       status: 201,
       message: 'Contact successfully created',
       data: contact,
+    });
+  };
+
+  export const deleteContactController = async (req, res) => {
+    const { contactId } = req.params;
+
+    const deletedContact = await deleteContact(contactId);
+
+    if (!deletedContact) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Contact not found',
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: 'Contact deleted successfully',
     });
   };
