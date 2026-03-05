@@ -6,6 +6,9 @@ import Layout from "./components/Layout.jsx";
 import EditStudent from "./pages/EditStudent.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
+import RestrictedRoute from "./components/RestrictedRoute.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import ContactsPage from "./pages/ContactsPage.jsx";
 
 
 function App() {
@@ -13,13 +16,12 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/students" element={<Students />} />
-        <Route path="/add" element={<AddStudent />} />
-        <Route path="/edit/:id" element={<EditStudent />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-
-
+        <Route path="/students" element={ <PrivateRoute> <Students /> </PrivateRoute>} />
+        <Route path="/add" element={<PrivateRoute> <AddStudent /> </PrivateRoute>} />
+        <Route path="/edit/:id" element={<PrivateRoute> <EditStudent /> </PrivateRoute>} />
+        <Route path="/contacts" element={<PrivateRoute> <ContactsPage /> </PrivateRoute>} />
+        <Route path="/login" element={<RestrictedRoute>  <LoginPage /> </RestrictedRoute> } />
+        <Route path="/register" element={<RestrictedRoute> <RegisterPage /> </RestrictedRoute>} />
       </Routes>
     </Layout>
   );

@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./Layout.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthIsSignedIn, selectAuthUserData } from "../redux/auth/selectors.js";
@@ -13,13 +13,13 @@ const Layout = ({ children }) => {
   const getNavLinkClass = ({ isActive }) => {
     return isActive ? `${styles.link} ${styles.active}`: styles.link;
   };
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch()
  
   const handleLogout = async () => {
     try {
       await dispatch(apiLogout()).unwrap();
-      navigate("/login");
+      // navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -35,6 +35,7 @@ const Layout = ({ children }) => {
         <>
           <NavLink to="/students" className={getNavLinkClass}>Students</NavLink>
           <NavLink to="/add" className={getNavLinkClass}>Add Student</NavLink>
+          <NavLink to="/contacts" className={getNavLinkClass}>Add Student</NavLink>
         </>
       )}
     </div>
