@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { apiRequestContacts } from "./operations.js";
 
 const initialState = {
   contacts: [],
@@ -11,6 +12,18 @@ export const contactsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => builder
+  .addCase(apiRequestContacts.pending, (state) => {
+    state.loading = true;
+    state.error = null;
+  })
+  .addCase(apiRequestContacts.fulfilled, (state, action) => {
+    state.loading = false;
+    state.contacts = action.payload.data;
+  })
+  .addCase(apiRequestContacts.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.payload;
+  })
     
 });
 
