@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiLogin, apiRegister } from "./operations.js";
+import { apiLogin, apiLogout, apiRegister } from "./operations.js";
 
 
 const initialState = {
@@ -41,6 +41,18 @@ export const authSlice = createSlice({
         state.token = action.payload.accessToken
       })
       .addCase(apiLogin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // user logout
+      .addCase(apiLogout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(apiLogout.fulfilled, () => {
+       return initialState
+      })
+      .addCase(apiLogout.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
