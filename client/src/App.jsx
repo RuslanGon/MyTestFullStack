@@ -9,7 +9,7 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import RestrictedRoute from "./components/RestrictedRoute.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import ContactsPage from "./pages/ContactsPage.jsx";
-
+import AddContact from "./pages/AddContact.jsx";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path="/add" element={<PrivateRoute> <AddStudent /> </PrivateRoute>} />
         <Route path="/edit/:id" element={<PrivateRoute> <EditStudent /> </PrivateRoute>} />
         <Route path="/contacts" element={<PrivateRoute> <ContactsPage /> </PrivateRoute>} />
+        <Route path="/addcontact" element={<PrivateRoute> <AddContact /> </PrivateRoute>} />
         <Route path="/login" element={<RestrictedRoute>  <LoginPage /> </RestrictedRoute> } />
         <Route path="/register" element={<RestrictedRoute> <RegisterPage /> </RestrictedRoute>} />
       </Routes>

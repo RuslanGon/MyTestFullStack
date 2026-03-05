@@ -5,6 +5,7 @@ import { selectContacts, selectContactsError, selectContactsLoading } from '../r
 import { apiRequestContacts, apiRequestDeleteContactsById } from '../redux/contacts/operations.js'
 import Loader from '../components/Loader.jsx';
 import Error from '../components/Error.jsx';
+import { Link } from 'react-router-dom';
 
 const ContactsPage = () => {
   const dispatch = useDispatch()
@@ -22,24 +23,28 @@ const deleteUser = async (id) => {
 
   return (
     <div className={styles.page}>
-    <h1 className={styles.title}>Contacts</h1>
-    {loading && <Loader />}
-    {error && <Error />}
-    <div className={styles.container}>
-      <div className={styles.list}>
-       
-        {contacts.map((contact) => (
-          <div key={contact._id} className={styles.studentCard}>
-            <h2>{contact.name}</h2>
-            <p>Number: {contact.number}</p>
-            <button type="button" onClick={() => deleteUser(contact._id)} 
-            className={styles.deleteButton}>Delete</button>
-          </div>
-        ))}
+      <h1 className={styles.title}>Contacts</h1>
+      {loading && <Loader />}
+      {error && <Error />}
+      <div className={styles.actions}>
+        <Link to='/addcontact' className={styles.addButton}>Add contact</Link>
+      </div>
+      <div className={styles.container}>
+        <div className={styles.list}>
+          {contacts.map((contact) => (
+            <div key={contact._id} className={styles.studentCard}>
+              <h2>{contact.name}</h2>
+              <p>Number: {contact.number}</p>
+              <button type="button" onClick={() => deleteUser(contact._id)}
+                className={styles.deleteButton} >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-  )
+  );
 }
 
 export default ContactsPage

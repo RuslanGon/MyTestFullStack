@@ -123,6 +123,27 @@
   background: #dc2626;
 }
 
+.actions {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.addButton {
+  text-decoration: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.addButton:hover {
+  background-color: #43a047;
+}
 
 
 
