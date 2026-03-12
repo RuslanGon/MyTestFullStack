@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import ContactsPage from "./pages/ContactsPage.jsx";
 import AddContact from "./pages/AddContact.jsx";
 import Products from "./pages/Products.jsx";
+import ProductDetails from "./pages/ProductDetails.jsx";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
         <Route path="/contacts" element={<PrivateRoute> <ContactsPage /> </PrivateRoute>} />
         <Route path="/addcontact" element={<PrivateRoute> <AddContact /> </PrivateRoute>} />
         <Route path="/products" element={<PrivateRoute> <Products /> </PrivateRoute>} />
+        <Route path="/products" element={<PrivateRoute> <Products /> </PrivateRoute>} />
+        <Route path="/products/:productId" element={<PrivateRoute> <ProductDetails /> </PrivateRoute>} />
+
         <Route path="/login" element={<RestrictedRoute>  <LoginPage /> </RestrictedRoute> } />
         <Route path="/register" element={<RestrictedRoute> <RegisterPage /> </RestrictedRoute>} />
       </Routes>

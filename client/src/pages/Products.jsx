@@ -5,6 +5,7 @@ import Error from "../components/Error.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProducts, selectProductsError, selectProductsLoading } from "../redux/products/selectors.js";
 import { apiRequesProducts } from "../redux/products/operations.js";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const Products = () => {
               <p>Price: {product.price} грн</p>
               <p>Rating: {product.rating}</p>
               <p>Category: {product.category}</p>
+              <Link to={`/products/${product.id}`} className={styles.link}>See Details</Link>
             </div>
           )) : <p className={styles.empty}>Продуктов нет</p>}
         </div>
@@ -50,6 +52,7 @@ const Products = () => {
           <button className={styles.button} onClick={handleClick}>Find</button>
         </div>
       </div>
+
     </div>
   );
 };
