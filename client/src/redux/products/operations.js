@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { requestAllProducts } from "../../services/api.js";
 
 export const apiRequesProducts = createAsyncThunk(
-    "students/get",
+    "products/get",
     async (_, thunkApi) => {
       try {
         const data = await requestAllProducts();
