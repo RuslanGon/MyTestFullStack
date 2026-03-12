@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import studentsReducer from "./students/studentsSlice.js";
 import authReducer from "./auth/authSlice.js";
 import contactsReducer from "./contacts/contactSlice.js";
+import productsReduser from './products/productsSlice.js'
 import {
   persistStore,
   persistReducer,
@@ -30,6 +31,7 @@ const persistedContactsReducer = persistReducer(contactsPersistConfig, contactsR
 
 export const store = configureStore({
   reducer: {
+    products: productsReduser,
     students: studentsReducer,
     auth: persistedAuthReducer,
     contacts: persistedContactsReducer,
