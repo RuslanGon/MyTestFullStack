@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProducts } from "../redux/products/selectors.js";
@@ -12,16 +12,16 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector(selectProducts);
-  const [product, setProduct] = useState(null);
 
+  // Загружаем продукты, если их ещё нет
   useEffect(() => {
     if (!products || products.length === 0) {
       dispatch(apiRequesProducts());
-    } else {
-      const found = products.find((p) => p.id === productId) || null;
-      setProduct(found);
     }
-  }, [dispatch, products, productId]);
+  }, [dispatch, products]);
+
+  // Находим нужный продукт
+  const product = products.find((p) => p.id === productId);
 
   if (!products.length) return <Loader />;
   if (!product) return <Error message="Product not found" />;
