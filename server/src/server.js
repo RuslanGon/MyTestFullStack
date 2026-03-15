@@ -9,6 +9,7 @@ import { errorHandlerMiddleware } from './middlewars/errorHandlerMiddleware.js';
 import studentsRouter from './routers/students.js';
 import authRouter from './routers/auth.js';
 import contactsRouter from './routers/contacts.js';
+import productsRouter from './routers/products.js';
 
 
 export const startServer = () => {
@@ -26,6 +27,7 @@ export const startServer = () => {
   app.use('/students', studentsRouter);
   app.use('/auth', authRouter);
   app.use('/contacts', contactsRouter);
+  app.use('/products', productsRouter);
 
 
   app.use(notFoundMiddleware);
