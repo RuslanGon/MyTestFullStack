@@ -66,7 +66,6 @@ await axios.delete(`https://mytestfullstack.onrender.com/contacts/${id}`);
 }
 
 export const requestAllProducts = async () => {
-  const { data } = await axios.get(
-    "https://ip-194-99-21-145-139178.vps.hosted-by-mvps.net/api/v1/products");
-    return data.data.products;
+  const response = await axios.get("https://mytestfullstack.onrender.com/products");
+  return response.data.data;         
 };
